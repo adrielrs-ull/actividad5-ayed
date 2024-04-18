@@ -29,12 +29,24 @@ template <class T> class rpn_t {
   // operaciones
   const int evaluate(queue_l_t<char>&);
 
+  //Modificación Clase
+  int GetAdidad(const char c) const;
  private: 
   T stack_;
   void operate_(const char operador);
 };
 
-
+//Modificación clase
+//(c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == 'r' || c == 'l' || c == 'c'
+template <class T>
+int rpn_t<T>::GetAdidad(const char c) const {
+  if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+    return 2;
+  } else {
+    return 1;
+  }
+    
+}
 // operaciones
 template<class T> const int rpn_t<T>::evaluate(queue_l_t<char>& q) {
   while (!q.empty()) 	{
@@ -67,7 +79,7 @@ template<class T> void rpn_t<T>::operate_(const char c) {
   
   int resultado;
   //aridad 1
-  if (c == 'r' || c == 'l' || c == 'c') {
+  if (GetAdidad(c) == 1) {
     int num = stack_.top();
     stack_.pop();
     std::cout << "   Sacamos de la pila un operando: " << num << std::endl;
